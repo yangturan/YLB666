@@ -1,0 +1,3 @@
+# Project exclude paths
+/YLB-api/target/
+/YLB-commons/target/

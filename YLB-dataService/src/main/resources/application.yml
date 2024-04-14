@@ -1,0 +1,48 @@
+spring:
+  application:
+    name: YLB-dataService
+  datasource:
+    url: jdbc:mysql://localhost:3306/ylb
+    password: 961222
+    username: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  data:
+    redis:
+      host: localhost
+      port: 6379
+
+
+
+mybatis:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    map-underscore-to-camel-case: true
+  mapper-locations: /mapper/**/*.xml
+
+dubbo:
+  protocol:
+    name: dubbo
+    port: 20881
+  registry:
+    address: zookeeper://localhost:2181
+  scan:
+    base-packages: com.ylbdataService.service
+  provider:
+#    超时次数
+    timeout: 50000
+#    重试次数
+    retries: 0
+  application:
+    qos-port: 20000
+
+
+server:
+  port: 8081
+  servlet:
+    context-path: /dataService
+
+#密码盐
+ylb:
+  passwordsalt: eqwewquewquieuwqeiqocsnadsa
+  akey: ylb
+

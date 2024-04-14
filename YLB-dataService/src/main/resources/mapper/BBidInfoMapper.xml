@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ylbdataService.mapper.BBidInfoMapper">
+
+    <resultMap id="BaseResultMap" type="com.ylbApi.Pojo.BBidInfo">
+            <id property="id" column="id" jdbcType="INTEGER"/>
+            <result property="loanId" column="loan_id" jdbcType="INTEGER"/>
+            <result property="uid" column="uid" jdbcType="INTEGER"/>
+            <result property="bidMoney" column="bid_money" jdbcType="DECIMAL"/>
+            <result property="bidTime" column="bid_time" jdbcType="TIMESTAMP"/>
+            <result property="bidStatus" column="bid_status" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <insert id="makeTouzi" useGeneratedKeys="true" keyProperty="key.id">
+        insert into b_bid_info(id,loan_id,uid,bid_money,bid_time,bid_status) values(0,#{loanId},#{uid},#{money},now(),1)
+    </insert>
+
+
+    <select id="getAllMoney" resultType="java.math.BigDecimal">
+        select sum(bid_money) from b_bid_info
+    </select>
+
+    <select id="getBid" resultType="com.ylbApi.Pojo.BBidInfo">
+        SELECT * FROM `b_bid_info` where uid=#{uid} ORDER BY bid_time desc LIMIT 14
+    </select>
+
+    <select id="getLoanNameById" resultType="java.lang.String">
+        select product_name from b_loan_info where id=#{id}
+    </select>
+    <select id="getRankPhone" resultType="com.ylbApi.PojoUtil.InventRankByUid">
+        SELECT uid,SUM(bid_money) as money FROM b_bid_info GROUP BY uid ORDER BY SUM(bid_money) DESC LIMIT 0,3
+    </select>
+
+</mapper>

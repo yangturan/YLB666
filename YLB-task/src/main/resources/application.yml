@@ -1,0 +1,33 @@
+#项目名称
+spring:
+  application:
+    name: YLB-task
+
+#    项目端口号
+server:
+  port: 9000
+
+dubbo:
+#  对外暴漏的端口号及其名称
+  protocol:
+    port: 20883
+    name: dubbo
+#    扫描包的范围
+  scan:
+    base-packages: com/example/ylbtask/task
+#    运维端口号
+  application:
+    qos-port: 20885
+#    接受服务设置
+  consumer:
+    retries: 0
+    check: true
+    #    超时时间
+    timeout: 50000
+#    注册中心
+  registry:
+    address: zookeeper://localhost:2181
+
+#自定义过期时间
+ylb:
+  expire2: 14400

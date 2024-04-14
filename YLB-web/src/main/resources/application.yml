@@ -1,0 +1,63 @@
+server:
+  port: 8000
+  servlet:
+    context-path: /api
+
+#dubbo配置
+dubbo:
+#  对外暴漏的端口号
+  protocol:
+    name: dubbo
+    port: 20882
+  registry:
+    address: zookeeper://localhost:2181
+#    接受服务类型
+  consumer:
+    timeout: 50000
+#    启动前先检查提供服务的类是否正常
+    check: true
+#    重连次数
+    retries: 0
+#  既是消费者又是服务者
+  provider:
+    #    超时次数
+    timeout: 50000
+    #    重试次数
+    retries: 0
+  scan:
+    base-packages: com.example.ylbweb
+#    运维端口号
+  application:
+    qos-port: 20001
+
+#对于微服务而言，你需要给你的spring一个独有的名称以供识别
+spring:
+  application:
+    name: YLB-web
+# redis配置
+  data:
+    redis:
+      host: localhost
+      port: 6379
+# 最大图片设置
+  servlet:
+    multipart:
+      max-file-size: 20MB
+# rabbitmq配置
+  rabbitmq:
+    host: 8.130.91.157
+    port: 5672
+    username: ylb
+    password: 961222
+    virtual-host: ylb
+
+
+#    swagger3扫描的包范围
+springdoc:
+  packages-to-scan: com.example.ylbweb.Controller
+
+
+#自定义属性
+ylb:
+  expire-time: 28800
+  expire-time2: 14400

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ylbdataService.mapper.UFinanceAccountMapper">
+
+    <resultMap id="BaseResultMap" type="com.ylbApi.Pojo.UFinanceAccount">
+            <id property="id" column="id" jdbcType="INTEGER"/>
+            <result property="uid" column="uid" jdbcType="INTEGER"/>
+            <result property="availableMoney" column="available_money" jdbcType="DECIMAL"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,uid,available_money
+    </sql>
+    <update id="setAccountMoney">
+        update u_finance_account set available_money=available_money-#{money} where uid=#{uid}
+    </update>
+
+    <update id="giveMoney">
+        update u_finance_account set available_money=available_money+#{bidMoney}+#{incomeMoney} where uid=#{uid}
+    </update>
+
+    <select id="getAccountMoney" resultType="java.math.BigDecimal">
+        select available_money from u_finance_account where uid=#{uid}
+    </select>
+</mapper>

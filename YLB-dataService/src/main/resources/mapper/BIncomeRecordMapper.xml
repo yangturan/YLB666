@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ylbdataService.mapper.BIncomeRecordMapper">
+
+    <resultMap id="BaseResultMap" type="com.ylbApi.Pojo.BIncomeRecord">
+            <id property="id" column="id" jdbcType="INTEGER"/>
+            <result property="uid" column="uid" jdbcType="INTEGER"/>
+            <result property="loanId" column="loan_id" jdbcType="INTEGER"/>
+            <result property="bidId" column="bid_id" jdbcType="INTEGER"/>
+            <result property="bidMoney" column="bid_money" jdbcType="DECIMAL"/>
+            <result property="incomeDate" column="income_date" jdbcType="DATE"/>
+            <result property="incomeMoney" column="income_money" jdbcType="DECIMAL"/>
+            <result property="incomeStatus" column="income_status" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,uid,loan_id,
+        bid_id,bid_money,income_date,
+        income_money,income_status
+    </sql>
+    <insert id="makeXinshouShouyi">
+        insert into b_income_record(id,uid,loan_id,bid_id,bid_money,income_date,income_money,income_status) values(0,#{uid},#{loanId},#{bidId},#{money},date_add(now(),interval #{cycle} day),#{incomeMoney},0)
+    </insert>
+
+    <insert id="makeshouyi">
+        insert into b_income_record(id,uid,loan_id,bid_id,bid_money,income_date,income_money,income_status) values(0,#{uid},#{loanId},#{bidId},#{money},date_add(now(),interval #{cycle} month),#{incomeMoney},0)
+    </insert>
+
+    <update id="updateStatus">
+        update b_income_record set income_status=1 where id=#{id}
+    </update>
+
+
+    <select id="getIncome" resultType="com.ylbApi.Pojo.BIncomeRecord">
+        SELECT * FROM `b_income_record` where uid=#{uid} ORDER BY income_date desc LIMIT 6
+    </select>
+
+    <select id="getIncomeOverTime" resultType="com.ylbApi.Pojo.BIncomeRecord">
+        select * from  b_income_record where  now()>income_date and income_status=0
+    </select>
+</mapper>
